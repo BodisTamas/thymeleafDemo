@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shopping List</title>
+</head>
+
+<body>
+    <div th:fragment="card(cardHeader, cardBody)">
+        <div class="card shopping-list-card">
+            <div class="card-header">
+                <div th:replace="${cardHeader}">
+                    This will be replace with implementation
+                </div>
+            </div>
+            <div class="card-body">
+                <div th:replace="${cardBody}">
+                    This will be replace with implementation
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
