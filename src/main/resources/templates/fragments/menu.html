@@ -7,14 +7,14 @@
 <body>
     <div th:fragment="menu">
         <nav class="navbar navbar-expand-lg navbar-light top-menu">
-            <a class="navbar-brand" href="#">Shopping List</a>
+            <a class="navbar-brand" href="">Shopping List</a>
             
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">
-                        <i class="fa-solid fa-plus"></i>
-                      Add
+                  <a class="nav-link" href="/add">
+                      <em class="fa-solid fa-plus"></em>
+                      <span th:text="#{button.add.new}"></span>
                   </a>
                 </li>
                 

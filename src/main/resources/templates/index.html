@@ -20,6 +20,13 @@
                             <div class="cardBody">
                                 <div th:each="item : ${shoppingList.items}">
                                     <input type="number" th:value="${item.quantity}" />
+                                    <select>
+                                        <option th:each="unit : ${T(hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit).values()}" 
+                                                th:value="${unit}" 
+                                                th:attrappend="selected=${unit == item.unit?true:null}">
+                                            <th:block th:text="#{__${unit.messageKey}__}"></th:block>
+                                        </option>
+                                    </select>
                                     <label th:text="${item.name}"></label>
                                 </div>
                             </div>

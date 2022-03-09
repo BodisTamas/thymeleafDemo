@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragments/layout}">
+
+<head>
+    <title>Shopping List</title>
+</head>
+
+<body>
+    <div layout:fragment="body">
+        <div class="container row">
+            <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
+                <div class="cardHeader">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span th:text="#{shopping.list.name}"></span>
+                            <input type="text" />
+                        </div>
+                        <div class="col-sm-6">
+                            <span th:text="#{shopping.list.date}"></span>
+                            <input type="date" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="cardBody">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input type="number" />
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" />
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

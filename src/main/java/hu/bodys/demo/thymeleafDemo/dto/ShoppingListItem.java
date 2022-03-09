@@ -9,5 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ShoppingListItem {
     private String name;
+    private ShoppingUnit unit;
     private int quantity;
 }
