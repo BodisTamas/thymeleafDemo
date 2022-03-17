@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +14,13 @@ import lombok.Setter;
 @Setter
 public class ShoppingList {
     private String name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private List<ShoppingListItem> items;
+
+    public ShoppingList(){
+        items = new ArrayList<>();
+    }
 
     public ShoppingList(String name, LocalDate date){
         this.name = name;
@@ -23,5 +30,9 @@ public class ShoppingList {
 
     public void addAll(ShoppingListItem... items){
         this.items.addAll(Arrays.asList(items));
+    }
+
+    public void add(ShoppingListItem item){
+        this.items.add(item);
     }
 }
