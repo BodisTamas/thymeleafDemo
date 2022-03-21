@@ -27,29 +27,20 @@
                     </div>
                     <div class="cardBody">
                         <div class="row" th:each="item : *{items}">
-
                             <div class="col-sm-4">
                                 <div
                                     th:replace="fragments/inputField :: number(#{shopping.list.item.quantity}, 'items[__${itemStat.index}__].quantity')">
                                 </div>
-
                             </div>
-
                             <div class="col-sm-4">
-
                                 <div
                                     th:replace="fragments/inputField :: dropdown(#{shopping.list.item.type}, 'items[__${itemStat.index}__].unit', 'hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit')">
                                 </div>
-
-
                             </div>
                             <div class="col-sm-4">
-
                                 <div
                                     th:replace="fragments/inputField :: text(#{shopping.list.item.name}, 'items[__${itemStat.index}__].name')">
                                 </div>
-
-
                             </div>
                         </div>
 

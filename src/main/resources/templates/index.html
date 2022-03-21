@@ -21,11 +21,10 @@
                                 <div th:each="item : ${shoppingList.items}">
                                     <input type="number" th:value="${item.quantity}" />
                                     <select>
-                                        <option th:each="unit : ${T(hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit).values()}" 
-                                                th:value="${unit}" 
-                                                th:attrappend="selected=${unit == item.unit?true:null}">
-                                            <th:block th:text="#{__${unit.messageKey}__}"></th:block>
-                                        </option>
+                                        <option th:each="shoppingUnit : ${T(hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit).values()}" 
+                                            th:value="${shoppingUnit}" 
+                                            th:text="#{__${shoppingUnit.messageKey}__}"
+                                            th:attrappend="selected = ${#strings.equals(item.unit.name,shoppingUnit.name)?true:null}"></option>
                                     </select>
                                     <label th:text="${item.name}"></label>
                                 </div>
