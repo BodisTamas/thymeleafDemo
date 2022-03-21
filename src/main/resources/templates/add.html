@@ -55,10 +55,12 @@
 
                         <div class="mt-2 text-end">
                             <button class="btn btn-primary" type="submit" th:name="${'newItem'}">
-                                Add new Item
+                                <i class="fa-solid fa-plus"></i>
+                                <span th:text="#{button.add.new.item}"></span>
                             </button>
                             <button class="btn btn-success" type="submit">
-                                Save
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span th:text="#{button.save}"></span>
                             </button>
                         </div>
                     </div>
