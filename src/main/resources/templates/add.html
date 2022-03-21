@@ -9,17 +9,18 @@
 <body>
     <div layout:fragment="body">
         <div class="container row">
-            <form action="#" th:action="@{/add}" th:object="${shoppingList}" method="post" accept-charset="UTF-8" id="shoppingListForm">
+            <form action="#" th:action="@{/add}" th:object="${shoppingList}" method="post" accept-charset="UTF-8"
+                id="shoppingListForm">
                 <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
                     <div class="cardHeader">
                         <div class="row">
                             <div class="col-sm-6">
-                                <span th:text="#{shopping.list.name}"></span>
-                                <input type="text" th:field=*{name}/>
+                                <div th:replace="fragments/inputField :: text(#{shopping.list.name}, 'name')"></div>
+
                             </div>
                             <div class="col-sm-6">
-                                <span th:text="#{shopping.list.date}"></span>
-                                <input type="date" th:field="*{date}" />
+                                <div th:replace="fragments/inputField :: date(#{shopping.list.date}, 'date')"></div>
+
                             </div>
                         </div>
 
@@ -28,26 +29,38 @@
                         <div class="row" th:each="item : *{items}">
 
                             <div class="col-sm-4">
-                                Mennyiség
-                                <input type="number" th:field="*{items[__${itemStat.index}__].quantity}" />
+                                <div
+                                    th:replace="fragments/inputField :: number(#{shopping.list.item.quantity}, 'items[__${itemStat.index}__].quantity')">
+                                </div>
+
                             </div>
 
                             <div class="col-sm-4">
-                                Típus
-                                <select th:field="*{items[__${itemStat.index}__].unit}">
-                                    <option th:each="unit : ${T(hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit).values()}"
-                                        th:value="${unit}">
-                                        <th:block th:text="#{__${unit.messageKey}__}"></th:block>
-                                    </option>
-                                </select>
+
+                                <div
+                                    th:replace="fragments/inputField :: dropdown(#{shopping.list.item.type}, 'items[__${itemStat.index}__].unit', 'hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit')">
+                                </div>
+
+
                             </div>
                             <div class="col-sm-4">
-                                Megnevezés
-                                <input type="text" th:field="*{items[__${itemStat.index}__].name}"/>
+
+                                <div
+                                    th:replace="fragments/inputField :: text(#{shopping.list.item.name}, 'items[__${itemStat.index}__].name')">
+                                </div>
+
+
                             </div>
                         </div>
-                        <button type="submit" th:name="${'newItem'}">Add new Item</button>
-                        <button type="submit">Save</button>
+
+                        <div class="mt-2 text-end">
+                            <button class="btn btn-primary" type="submit" th:name="${'newItem'}">
+                                Add new Item
+                            </button>
+                            <button class="btn btn-success" type="submit">
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>

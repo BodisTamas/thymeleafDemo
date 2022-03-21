@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shopping List</title>
+</head>
+
+<body>
+    <div th:fragment="text(label, fieldName)">
+        <div th:replace="~{:: customInput('text', ${label}, ${fieldName})}"></div>
+    </div>
+    <div th:fragment="date(label, fieldName)">
+        <div th:replace="~{:: customInput('date', ${label}, ${fieldName})}"></div>
+    </div>
+    <div th:fragment="number(label, fieldName)">
+        <div th:replace="~{:: customInput('number', ${label}, ${fieldName})}"></div>
+    </div>
+
+
+    <div th:fragment="customInput(type, label, fieldName)">
+        <div class="input-group">
+            <span class="input-group-text" th:text="${label}"></span>
+            <input class="form-control" th:type="${type}" th:field=*{__${fieldName}__} />
+        </div>
+    </div>
+
+    <div th:fragment="dropdown(label, fieldName, backendEnumName)">
+        <div class="input-group">
+            <span class="input-group-text" th:text="${label}"></span>
+            <select th:field="*{__${fieldName}__}">
+                <option th:each="unit : ${T(__${backendEnumName}__).values()}" th:value="${unit}">
+                    <th:block th:text="#{__${unit.messageKey}__}"></th:block>
+                </option>
+            </select>
+        </div>
+
+    </div>
+</body>
+
+</html>
