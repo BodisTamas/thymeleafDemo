@@ -13,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ShoppingList {
+    private Integer id;
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
@@ -22,7 +23,8 @@ public class ShoppingList {
         items = new ArrayList<>();
     }
 
-    public ShoppingList(String name, LocalDate date){
+    public ShoppingList(int id, String name, LocalDate date){
+        this.id = id;
         this.name = name;
         this.date = date;
         items = new ArrayList<>();

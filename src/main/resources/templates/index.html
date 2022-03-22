@@ -16,6 +16,9 @@
                             <div class="cardHeader">
                                 <span th:text="${shoppingList.name}"></span>
                                 <span th:text="${shoppingList.date}"></span>
+                                <a th:href="@{/details__${shoppingList.id}__}" class="btn btn-light">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
                             </div>
                             <div class="cardBody">
                                 <div th:each="item : ${shoppingList.items}">

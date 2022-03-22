@@ -15,6 +15,7 @@
                     <div class="cardHeader">
                         <div class="row">
                             <div class="col-sm-6">
+                                <input type="text" th:field="*{id}" />
                                 <div th:replace="fragments/inputField :: text(#{shopping.list.name}, 'name')"></div>
 
                             </div>
@@ -26,21 +27,26 @@
 
                     </div>
                     <div class="cardBody">
-                        <div class="row" th:each="item : *{items}">
-                            <div class="col-sm-4">
+                        <div class="row mb-2" th:each="item : *{items}">
+                            <div class="col-sm-3">
                                 <div
                                     th:replace="fragments/inputField :: number(#{shopping.list.item.quantity}, 'items[__${itemStat.index}__].quantity')">
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div
                                     th:replace="fragments/inputField :: dropdown(#{shopping.list.item.type}, 'items[__${itemStat.index}__].unit', 'hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit')">
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div
                                     th:replace="fragments/inputField :: text(#{shopping.list.item.name}, 'items[__${itemStat.index}__].name')">
                                 </div>
+                            </div>
+                            <div class="col-sm-3 text-end">
+                                <button class="btn btn-danger" type="submit" th:name="${'deleteItem'}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>    
                             </div>
                         </div>
 
