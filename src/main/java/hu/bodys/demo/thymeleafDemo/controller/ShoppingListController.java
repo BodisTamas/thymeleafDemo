@@ -14,42 +14,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import groovy.util.logging.Slf4j;
+
 import hu.bodys.demo.thymeleafDemo.dto.ShoppingList;
 import hu.bodys.demo.thymeleafDemo.dto.ShoppingListItem;
-import hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class ShoppingListController {
 
-    @ModelAttribute("shoppingLists")
-    public List<ShoppingList> gShoppingLists(){
-        List<ShoppingList> shoppingLists = new ArrayList<>();
-        ShoppingListItem item1 = new ShoppingListItem("Bread", ShoppingUnit.KILOGRAM, 1);
-        ShoppingListItem item2 = new ShoppingListItem("Milk", ShoppingUnit.LITER, 3);
-        ShoppingListItem item3 = new ShoppingListItem("Candy", ShoppingUnit.BOX, 1);
-        ShoppingList shoppingList = new ShoppingList(1,"Shopping 1", LocalDate.now());
-        shoppingList.addAll(item1, item2, item3);
-
-        ShoppingListItem item4 = new ShoppingListItem("Sliced Bread", ShoppingUnit.KILOGRAM, 1);
-        ShoppingListItem item5 = new ShoppingListItem("Milk", ShoppingUnit.LITER, 3);
-        ShoppingListItem item6 = new ShoppingListItem("Sausage",ShoppingUnit.PIECE, 2);
-        ShoppingListItem item7 = new ShoppingListItem("Water", ShoppingUnit.SHRINK, 1);
-        ShoppingList shoppingList2 = new ShoppingList(2, "Shopping 2", LocalDate.now().minusDays(2));
-        shoppingList2.addAll(item4, item5, item6, item7);
-        
-        shoppingLists.add(shoppingList);
-        shoppingLists.add(shoppingList2);
-        return shoppingLists;
-    }
+    private final List<ShoppingList> shoppingLists;
 
     @GetMapping("/")
-    public String homePage(){
+    public String homePage(Model model){
+        model.addAttribute("shoppingLists", shoppingLists);
         return "index";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/details")
     public String add(Model model){
         ShoppingList shoppingList = new ShoppingList();
         shoppingList.add(new ShoppingListItem());
@@ -58,13 +42,13 @@ public class ShoppingListController {
     }
 
     @GetMapping("/details{id}")
-    public String details(@PathVariable Integer id,@ModelAttribute("shoppingLists") List<ShoppingList> shoppingLists, Model model){
+    public String details(@PathVariable Integer id, Model model){
         Optional<ShoppingList> actualList = shoppingLists.stream().filter(s -> s.getId() == id).findFirst();
         actualList.ifPresent(s -> model.addAttribute("shoppingList", s));
         return "details";
     }
 
-    @PostMapping(value = "/add", params = {"newItem"})
+    @PostMapping(value = "/details", params = {"newItem"})
     public String addNewItem(@ModelAttribute("shoppingList") ShoppingList shoppingList, Model model){
         
         shoppingList.add(new ShoppingListItem());
@@ -72,14 +56,21 @@ public class ShoppingListController {
         return "details";
     }
 
-    @PostMapping("/add")
-    public String addNewShoppingList(@ModelAttribute("shoppingList") ShoppingList shoppingList, @ModelAttribute("shoppingLists") List<ShoppingList> shoppingLists){
+    @PostMapping("/details")
+    public String addNewShoppingList(@ModelAttribute("shoppingList") ShoppingList shoppingList, Model model){
         if(shoppingList.getId() != null){
             shoppingLists.set(shoppingList.getId()-1, shoppingList);
         } else {
             shoppingList.setId(shoppingLists.size() + 1);
             shoppingLists.add(shoppingList);
         }
-        return "index";
+        
+        return "redirect:/";
+    }
+
+    @PostMapping(value="/details", params = {"deleteItem"})
+    public String deleteItem(@ModelAttribute("shoppingList") ShoppingList shoppingList){
+        log.info("delete item");
+        return "details";
     }
 }

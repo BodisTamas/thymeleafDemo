@@ -9,7 +9,7 @@
 <body>
     <div layout:fragment="body">
         <div class="container row">
-            <form action="#" th:action="@{/add}" th:object="${shoppingList}" method="post" accept-charset="UTF-8"
+            <form action="#" th:action="@{/details}" th:object="${shoppingList}" method="post" accept-charset="UTF-8"
                 id="shoppingListForm">
                 <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
                     <div class="cardHeader">
