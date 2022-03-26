@@ -13,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ShoppingList {
+    private Integer selectedItemId;
     private Integer id;
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

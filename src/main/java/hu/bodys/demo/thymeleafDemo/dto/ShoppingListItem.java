@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoppingListItem {
+    private Integer id;
     private String name;
     private ShoppingUnit unit;
     private int quantity;

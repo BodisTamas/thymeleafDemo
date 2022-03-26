@@ -8,16 +8,20 @@
 
 <body>
     <div layout:fragment="body">
+        <script>
+            function setSelectedItemIdx(index){
+                $("#selectedItemId").val(index);
+            }
+        </script>
         <div class="container row">
             <form action="#" th:action="@{/details}" th:object="${shoppingList}" method="post" accept-charset="UTF-8"
                 id="shoppingListForm">
+                <input type="text" th:field="*{selectedItemId}" id="selectedItemId">
                 <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
                     <div class="cardHeader">
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="text" th:field="*{id}" />
                                 <div th:replace="fragments/inputField :: text(#{shopping.list.name}, 'name')"></div>
-
                             </div>
                             <div class="col-sm-6">
                                 <div th:replace="fragments/inputField :: date(#{shopping.list.date}, 'date')"></div>
@@ -29,6 +33,7 @@
                     <div class="cardBody">
                         <div class="row mb-2" th:each="item : *{items}">
                             <div class="col-sm-3">
+                                <input type="hidden" th:field="*{items[__${itemStat.index}__].id}">
                                 <div
                                     th:replace="fragments/inputField :: number(#{shopping.list.item.quantity}, 'items[__${itemStat.index}__].quantity')">
                                 </div>
@@ -44,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-3 text-end">
-                                <button class="btn btn-danger" type="submit" th:name="${'deleteItem'}">
+                                <button class="btn btn-danger" type="submit" th:name="${'deleteItem'}" th:attr="onclick = ${'setSelectedItemIdx(__${item.id}__)'}">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>    
                             </div>

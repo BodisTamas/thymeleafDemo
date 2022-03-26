@@ -1,11 +1,7 @@
 package hu.bodys.demo.thymeleafDemo.controller;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 
 import hu.bodys.demo.thymeleafDemo.dto.ShoppingList;
 import hu.bodys.demo.thymeleafDemo.dto.ShoppingListItem;
@@ -50,8 +45,9 @@ public class ShoppingListController {
 
     @PostMapping(value = "/details", params = {"newItem"})
     public String addNewItem(@ModelAttribute("shoppingList") ShoppingList shoppingList, Model model){
-        
-        shoppingList.add(new ShoppingListItem());
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
+        shoppingListItem.setId(shoppingList.getItems().size() + 1);
+        shoppingList.add(shoppingListItem);
         
         return "details";
     }
@@ -70,7 +66,12 @@ public class ShoppingListController {
 
     @PostMapping(value="/details", params = {"deleteItem"})
     public String deleteItem(@ModelAttribute("shoppingList") ShoppingList shoppingList){
-        log.info("delete item");
+        log.info(shoppingList.getSelectedItemId().toString());
+        Integer id = shoppingList.getSelectedItemId();
+        if(id != null){
+            shoppingList.getItems().removeIf(item -> item.getId().intValue() == id.intValue());
+        }
+        
         return "details";
     }
 }
