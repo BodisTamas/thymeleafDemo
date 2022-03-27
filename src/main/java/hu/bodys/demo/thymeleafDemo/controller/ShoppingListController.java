@@ -3,8 +3,11 @@ package hu.bodys.demo.thymeleafDemo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +56,11 @@ public class ShoppingListController {
     }
 
     @PostMapping("/details")
-    public String addNewShoppingList(@ModelAttribute("shoppingList") ShoppingList shoppingList, Model model){
+    public String addNewShoppingList(@Valid @ModelAttribute("shoppingList") ShoppingList shoppingList, BindingResult bindingResult){
+        log.info("has error: " + bindingResult.hasErrors());
+        if(bindingResult.hasErrors()){
+            return "details";
+        }
         if(shoppingList.getId() != null){
             shoppingLists.set(shoppingList.getId()-1, shoppingList);
         } else {

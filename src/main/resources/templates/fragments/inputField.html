@@ -26,7 +26,9 @@
             <input class="form-control" 
                    th:type="${type}" 
                    th:field=*{__${fieldName}__}
-                   th:attrappend="disabled=${disabled ?: null}" />
+                   th:attrappend="disabled=${disabled ?: null}"
+                   th:classappend="${#fields.hasErrors('__${fieldName}__')}? 'error' : ''" />
+            <p th:if="${#fields.hasErrors('__${fieldName}__')}" th:errorclass="error"  th:errors="*{__${fieldName}__}"></p>
         </div>
     </div>
 

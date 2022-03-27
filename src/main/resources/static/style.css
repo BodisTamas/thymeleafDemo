@@ -25,3 +25,7 @@ body {
 .shopping-list-card .card-body {
     color: #2c3e50;
 }
+
+.error {
+    color: red;
+}
