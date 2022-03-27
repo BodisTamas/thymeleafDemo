@@ -34,7 +34,9 @@ public class ShoppingListController {
     @GetMapping("/details")
     public String add(Model model){
         ShoppingList shoppingList = new ShoppingList();
-        shoppingList.add(new ShoppingListItem());
+        ShoppingListItem item = new ShoppingListItem();
+        item.setId(1);
+        shoppingList.add(item);
         model.addAttribute("shoppingList", shoppingList);
         return "details";
     }

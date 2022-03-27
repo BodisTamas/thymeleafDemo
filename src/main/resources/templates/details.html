@@ -11,8 +11,8 @@
         <div class="container row">
             <form action="#" th:action="@{/details}" th:object="${shoppingList}" method="post" accept-charset="UTF-8"
                 id="shoppingListForm">
-                <input type="hidden" th:field="*{selectedItemId}" id="selectedItemId">
-                <input type="hidden" th:field="*{id}">
+                <input type="text" th:field="*{selectedItemId}" id="selectedItemId">
+                <input type="text" th:field="*{id}">
                 <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
                     <div class="cardHeader">
                         <div class="row">
@@ -29,7 +29,7 @@
                     <div class="cardBody">
                         <div class="row mb-2" th:each="item : *{items}">
                             <div class="col-sm-3">
-                                <input type="hidden" th:field="*{items[__${itemStat.index}__].id}">
+                                <input type="text" th:field="*{items[__${itemStat.index}__].id}">
                                 <div
                                     th:replace="fragments/inputField :: number(#{shopping.list.item.quantity}, 'items[__${itemStat.index}__].quantity')">
                                 </div>
