@@ -19,21 +19,75 @@
 
     <div th:fragment="customInput(type, label, fieldName)">
         <div class="input-group">
-            <span class="input-group-text" th:text="${label}"></span>
-            <input class="form-control" th:type="${type}" th:field=*{__${fieldName}__} />
+            <span th:if="${label != null}" 
+                  class="input-group-text" 
+                  th:text="${label}">
+            </span>
+            <input class="form-control" 
+                   th:type="${type}" 
+                   th:field=*{__${fieldName}__}
+                   th:attrappend="disabled=${disabled ?: null}" />
         </div>
     </div>
 
     <div th:fragment="dropdown(label, fieldName, backendEnumName)">
         <div class="input-group">
-            <span class="input-group-text" th:text="${label}"></span>
+            <span class="input-group-text" 
+                  th:text="${label}">
+            </span>
             <select th:field="*{__${fieldName}__}">
-                <option th:each="unit : ${T(__${backendEnumName}__).values()}" th:value="${unit}">
+                <option th:each="unit : ${T(__${backendEnumName}__).values()}" 
+                        th:value="${unit}">
                     <th:block th:text="#{__${unit.messageKey}__}"></th:block>
                 </option>
             </select>
         </div>
+    </div>
 
+    <div class="d-inline" th:fragment="numberWithoutLabelAndNoBinding(value)">
+        <input th:type="number" 
+               th:value="${value}"
+               th:attrappend="disabled=${#bools.isTrue(disabled) ? 'disabled' : null}" />
+    </div>
+
+    <div class="d-inline" th:fragment="dropdownWithoutLabelAndNoBinding(valuesObejctName, selectedValue)">
+        <select th:attrappend="disabled=${#bools.isTrue(disabled) ? 'disabled' : null}">
+            <option th:each="shoppingUnit : ${__${valuesObejctName}__}"
+                    th:value="${shoppingUnit}" 
+                    th:text="#{__${shoppingUnit.messageKey}__}"
+                    th:attrappend="selected = ${#strings.equals(selectedValue,shoppingUnit.name) ? true : null}">
+            </option>
+        </select>
+    </div>
+
+    <div class="d-inline" th:fragment="submitButton(styleClass, icon, label)">
+        <div th:replace="~{ :: submitButtonSkeleton(${styleClass}, ~{ :: .submitButtonBody})}">
+            <th:block class="submitButtonBody">
+                <em th:class="${icon}"></em>
+                <span th:text="${label}"></span>
+            </th:block>
+        </div>
+    </div>
+
+    <div class="d-inline" th:fragment="submitButtonWithoutLabel(styleClass, icon)">
+        <div th:replace="~{ :: submitButtonSkeleton(${styleClass}, ~{ :: .submitButtonWithoutLabel})}">
+            <th:block class="submitButtonWithoutLabel">
+                <em th:class="${icon}"></em>
+            </th:block>
+        </div>
+    </div>
+
+    <div class="d-inline" th:fragment="submitButtonSkeleton(styleClass, buttonBody)">
+        <button th:class="|btn ${styleClass}|" type="submit"
+            th:attrappend = "name = ${buttonName ?: null},
+                             onclick = ${onClick ?: null}">
+            <div th:replace="${buttonBody}"></div>
+        </button>
+    </div>
+    <div class="d-inline" th:fragment="navigationButton(href, styleClass, icon)">
+        <a th:href="@{__${href}__}" th:class="|btn ${styleClass}|">
+            <em th:class="${icon}"></em>
+        </a>
     </div>
 </body>
 

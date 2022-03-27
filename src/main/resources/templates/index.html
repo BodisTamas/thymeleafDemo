@@ -10,34 +10,33 @@
     <div layout:fragment="body">
         <div class="container">
             <div class="row">
-                
-                    <div class="col-sm-4" th:each="shoppingList : ${shoppingLists}">
-                        <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
-                            <div class="cardHeader">
-                                <span th:text="${shoppingList.name}"></span>
-                                <span th:text="${shoppingList.date}"></span>
-                                <a th:href="@{/details__${shoppingList.id}__}" class="btn btn-light">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-                            </div>
-                            <div class="cardBody">
-                                <div th:each="item : ${shoppingList.items}">
-                                    <input type="number" th:value="${item.quantity}" />
-                                    <select>
-                                        <option th:each="shoppingUnit : ${T(hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit).values()}" 
-                                            th:value="${shoppingUnit}" 
-                                            th:text="#{__${shoppingUnit.messageKey}__}"
-                                            th:attrappend="selected = ${#strings.equals(item.unit.name,shoppingUnit.name)?true:null}"></option>
-                                    </select>
-                                    <label th:text="${item.name}"></label>
+                <div class="col-sm-6" th:each="shoppingList : ${shoppingLists}">
+                    <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
+                        <div class="cardHeader">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span th:text="${shoppingList.name}"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span th:text="${shoppingList.date}"></span>
+                                </div>
+                                <div class="col-sm-4 text-end">
+                                    <div th:replace="fragments/inputField :: navigationButton(${'/details__${shoppingList.id}__'}, 'btn-light', 'fa-solid fa-pen')"></div>
+                                    <div th:replace="fragments/inputField :: navigationButton(${'/remove__${shoppingList.id}__'}, 'btn-danger', 'fa-solid fa-trash')"></div>
                                 </div>
                             </div>
                         </div>
+                        <div class="cardBody" th:with="disabled = ${true}">
+                            <div th:each="item : ${shoppingList.items}">
+                                <div th:replace="fragments/inputField :: numberWithoutLabelAndNoBinding(${item.quantity})"></div>
+                                <div th:replace="fragments/inputField :: dropdownWithoutLabelAndNoBinding('T(hu.bodys.demo.thymeleafDemo.dto.ShoppingUnit).values()', ${item.unit.name})"></div>
+                                <label th:text="${item.name}"></label>
+                            </div>
+                        </div>
                     </div>
-                
+                </div>
             </div>
         </div>
-
     </div>
 </body>
 

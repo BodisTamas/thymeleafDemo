@@ -38,7 +38,7 @@ public class ShoppingListController {
 
     @GetMapping("/details{id}")
     public String details(@PathVariable Integer id, Model model){
-        Optional<ShoppingList> actualList = shoppingLists.stream().filter(s -> s.getId() == id).findFirst();
+        Optional<ShoppingList> actualList = shoppingLists.stream().filter(s -> s.getId().intValue() == id.intValue()).findFirst();
         actualList.ifPresent(s -> model.addAttribute("shoppingList", s));
         return "details";
     }
@@ -73,5 +73,11 @@ public class ShoppingListController {
         }
         
         return "details";
+    }
+
+    @GetMapping("/remove{id}")
+    public String removeShoppingList(@PathVariable Integer id){
+        shoppingLists.removeIf(s -> s.getId().intValue() == id.intValue());
+        return "redirect:/";
     }
 }

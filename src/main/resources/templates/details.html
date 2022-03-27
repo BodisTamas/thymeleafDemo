@@ -9,14 +9,15 @@
 <body>
     <div layout:fragment="body">
         <script>
-            function setSelectedItemIdx(index){
+            function setSelectedItemIdx(index) {
                 $("#selectedItemId").val(index);
             }
         </script>
         <div class="container row">
             <form action="#" th:action="@{/details}" th:object="${shoppingList}" method="post" accept-charset="UTF-8"
                 id="shoppingListForm">
-                <input type="text" th:field="*{selectedItemId}" id="selectedItemId">
+                <input type="hidden" th:field="*{selectedItemId}" id="selectedItemId">
+                <input type="hidden" th:field="*{id}">
                 <div th:insert="fragments/container/container :: card(~{ :: .cardHeader}, ~{ :: .cardBody})">
                     <div class="cardHeader">
                         <div class="row">
@@ -49,21 +50,23 @@
                                 </div>
                             </div>
                             <div class="col-sm-3 text-end">
-                                <button class="btn btn-danger" type="submit" th:name="${'deleteItem'}" th:attr="onclick = ${'setSelectedItemIdx(__${item.id}__)'}">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>    
+                                <th:block th:with="buttonName = ${'deleteItem'},
+                                                   onClick = ${'setSelectedItemIdx(__${item.id}__)'}">
+                                    <div th:replace="fragments/inputField :: submitButtonWithoutLabel('btn-danger', 'fa-solid fa-trash' )">
+                                    </div>
+                                </th:block>
                             </div>
                         </div>
 
                         <div class="mt-2 text-end">
-                            <button class="btn btn-primary" type="submit" th:name="${'newItem'}">
-                                <i class="fa-solid fa-plus"></i>
-                                <span th:text="#{button.add.new.item}"></span>
-                            </button>
-                            <button class="btn btn-success" type="submit">
-                                <i class="fa-solid fa-floppy-disk"></i>
-                                <span th:text="#{button.save}"></span>
-                            </button>
+                            <th:block th:with="buttonName = ${'newItem'}">
+                                <div th:replace="fragments/inputField :: submitButton('btn-primary', 'fa-solid fa-plus', #{button.add.new.item})">
+                                </div>
+                            </th:block>
+
+                            <div th:replace="fragments/inputField :: submitButton('btn-success', 'fa-solid fa-floppy-disk', #{button.save})">
+                            </div>
+
                         </div>
                     </div>
                 </div>
