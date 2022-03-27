@@ -8,11 +8,6 @@
 
 <body>
     <div layout:fragment="body">
-        <script>
-            function setSelectedItemIdx(index) {
-                $("#selectedItemId").val(index);
-            }
-        </script>
         <div class="container row">
             <form action="#" th:action="@{/details}" th:object="${shoppingList}" method="post" accept-charset="UTF-8"
                 id="shoppingListForm">
